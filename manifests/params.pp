@@ -89,7 +89,6 @@ class puppet::params {
     'Darwin': {
       $puppet_agent_service         = 'com.puppetlabs.puppet'
       $puppet_agent_package         = 'puppet'
-      $package_provider             = 'apple'
       $puppet_conf                  = '/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/lib/puppet'
       $puppet_ssldir                = '/etc/puppet/ssl'
