@@ -115,11 +115,21 @@ class puppet::agent(
       gid    => $group_id,
     }
   }
-  package { $puppet_agent_package:
-    ensure   => $version,
-    provider => $package_provider,
+  case $::osfamily {
+    'Darwin': {
+      package { $puppet_agent_package:
+        ensure   => $version,
+        provider => $package_provider,
+        source   => 'puppet:///modules/puppet/puppet-3.8.2.pkg',
+      }
+    }
+    default: {
+      package { $puppet_agent_package:
+        ensure   => $version,
+        provider => $package_provider,
+      }
+    }  
   }
-
   if $puppet_run_style == 'service' {
     $startonboot = 'yes'
   }
