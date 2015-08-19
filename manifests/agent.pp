@@ -120,7 +120,7 @@ class puppet::agent(
       package { $puppet_agent_package:
         ensure   => $version,
         provider => $package_provider,
-        source   => 'puppet:///modules/puppet/puppet-3.8.2.pkg',
+        source   => 'https://downloads.puppetlabs.com/mac/puppet-3.8.2.dmg',
       }
     }
     default: {
