@@ -127,7 +127,7 @@ class puppet::agent(
         provider => $package_provider,
         source   => 'https://downloads.puppetlabs.com/mac/facter-2.4.4.dmg',
       }
-      package { puppet:
+      package { 'puppet':
         ensure   => present,
         provider => $package_provider,
         source   => 'https://downloads.puppetlabs.com/mac/puppet-latest.dmg',
