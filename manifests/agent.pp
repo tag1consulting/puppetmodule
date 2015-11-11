@@ -120,17 +120,17 @@ class puppet::agent(
       package {'hiera':
         ensure   => present,
         provider => $package_provider,
-        source   => 'https://downloads.puppetlabs.com/mac/hiera-latest.dmg',
+        source   => 'https://downloads.puppetlabs.com/mac/hiera-1.3.4.dmg',
       }
       package {'facter':
         ensure   => present,
         provider => $package_provider,
         source   => 'https://downloads.puppetlabs.com/mac/facter-2.4.4.dmg',
       }
-      package { 'puppet':
-        ensure   => present,
+      package { $puppet_agent_package:
+        ensure   => $version,
         provider => $package_provider,
-        source   => 'https://downloads.puppetlabs.com/mac/puppet-latest.dmg',
+        source   => 'https://downloads.puppetlabs.com/mac/puppet-3.8.4.dmg',
       }
     }
     default: {
