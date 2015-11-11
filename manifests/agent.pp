@@ -130,7 +130,7 @@ class puppet::agent(
       package { 'puppet':
         ensure   => present,
         provider => $package_provider,
-        source   => 'pup',
+        source   => 'https://downloads.puppetlabs.com/mac/puppet-latest.dmg',
       }
     }
     default: {
