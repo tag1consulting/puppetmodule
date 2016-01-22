@@ -125,12 +125,12 @@ class puppet::agent(
   }
   case $::osfamily {
     'Darwin': {
-      package {$puppet_facter_package:
+      package {"facter-${mac_facter_version}.dmg":
         ensure   => present,
         provider => $package_provider,
         source   => "https://downloads.puppetlabs.com/mac/facter-${mac_facter_version}.dmg",
       }
-      package { $puppet_agent_package:
+      package { "puppet-${mac_version}.dmg":
         ensure   => present,
         provider => $package_provider,
         source   => "https://downloads.puppetlabs.com/mac/puppet-${mac_version}.dmg'"
