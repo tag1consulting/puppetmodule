@@ -117,12 +117,12 @@ class puppet::agent(
   }
   case $::osfamily {
     'Darwin': {
-      package {'hiera':
+      package {'hiera-1.3.4':
         ensure   => present,
         provider => $package_provider,
         source   => 'https://downloads.puppetlabs.com/mac/hiera-1.3.4.dmg',
       }
-      package {'facter':
+      package {'facter-2.4.4':
         ensure   => present,
         provider => $package_provider,
         source   => 'https://downloads.puppetlabs.com/mac/facter-2.4.4.dmg',
