@@ -121,12 +121,12 @@ class puppet::agent(
   }
   case $::osfamily {
     'Darwin': {
-      package {"${mac_facter_version}.dmg":
+      package {"facter-${mac_facter_version}.dmg":
         ensure   => present,
         provider => $package_provider,
         source   => "https://downloads.puppetlabs.com/mac/facter-${mac_facter_version}.dmg",
       }
-      package { "${mac_version}.dmg":
+      package { "puppet-${mac_version}.dmg":
         ensure   => present,
         provider => $package_provider,
         source   => "https://downloads.puppetlabs.com/mac/puppet-${mac_version}.dmg'"
@@ -137,7 +137,7 @@ class puppet::agent(
         ensure   => $version,
         provider => $package_provider,
       }
-    } 
+    }
   }
   if $puppet_run_style == 'service' {
     $startonboot = 'yes'
