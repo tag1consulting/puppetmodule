@@ -6,6 +6,8 @@
 #   ['puppet_server']         - The dns name of the puppet master
 #   ['puppet_server_port']    - The Port the puppet master is running on
 #   ['puppet_agent_service']  - The service the puppet agent runs under
+#   ['mac_version']           - The package version for Mac OS X
+#   ['mac_facter_version']    - The Factor Version for Mac OS X
 #   ['puppet_agent_package']  - The name of the package providing the puppet agent
 #   ['version']               - The version of the puppet agent to install
 #   ['puppet_run_style']      - The run style of the agent either 'service', 'cron', 'external' or 'manual'
@@ -121,9 +123,25 @@ class puppet::agent(
       gid    => $group_id,
     }
   }
-  package { $puppet_agent_package:
-    ensure   => $version,
-    provider => $package_provider,
+  case $::osfamily {
+    'Darwin': {
+      package {$puppet_facter_package:
+        ensure   => present,
+        provider => $package_provider,
+        source   => "https://downloads.puppetlabs.com/mac/facter-${mac_facter_version}.dmg",
+      }
+      package { $puppet_agent_package:
+        ensure   => present,
+        provider => $package_provider,
+        source   => "https://downloads.puppetlabs.com/mac/puppet-${mac_version}.dmg'"
+      }
+    }
+    default: {
+      package { $puppet_agent_package:
+        ensure   => $version,
+        provider => $package_provider,
+      }
+    }  
   }
 
   if $puppet_run_style == 'service' {

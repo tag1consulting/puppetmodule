@@ -33,7 +33,6 @@ class puppet::params {
   $digest_algorithm                 = 'md5'
   $puppet_run_interval              = 30
   $classfile                        = '$statedir/classes.txt'
-  $package_provider                 = undef # falls back to system default
   $rundir                           = '/var/run/puppet'
   $puppet_passenger_ssl_protocol    = 'TLSv1.2'
   $puppet_passenger_ssl_cipher      = 'AES256+EECDH:AES256+EDH'
@@ -47,6 +46,7 @@ class puppet::params {
       $puppet_master_service        = 'puppetmaster'
       $puppet_agent_service         = 'puppet'
       $puppet_agent_package         = 'puppet'
+      $package_provider                 = undef # falls back to system default
       $puppet_defaults              = '/etc/sysconfig/puppet'
       $puppet_conf                  = '/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/lib/puppet'
@@ -60,6 +60,7 @@ class puppet::params {
       $puppet_master_service        = 'puppetmasterd'
       $puppet_agent_service         = 'puppet'
       $puppet_agent_package         = 'puppet'
+      $package_provider                 = undef # falls back to system default
       $puppet_conf                  = '/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/lib/puppet'
       $puppet_ssldir                = '/var/lib/puppet/ssl'
@@ -71,6 +72,7 @@ class puppet::params {
       $puppet_master_service        = 'puppetmaster'
       $puppet_agent_service         = 'puppet'
       $puppet_agent_package         = 'puppet'
+      $package_provider                 = undef # falls back to system default
       $puppet_defaults              = '/etc/default/puppet'
       $puppet_conf                  = '/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/lib/puppet'
@@ -82,13 +84,16 @@ class puppet::params {
     'FreeBSD': {
       $puppet_agent_service         = 'puppet'
       $puppet_agent_package         = 'sysutils/puppet'
+      $package_provider                 = undef # falls back to system default
       $puppet_conf                  = '/usr/local/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/puppet'
       $puppet_ssldir                = '/var/puppet/ssl'
     }
     'Darwin': {
       $puppet_agent_service         = 'com.puppetlabs.puppet'
-      $puppet_agent_package         = 'puppet'
+      $puppet_agent_package         = 'puppet-3.8.4.dmg'
+      $puppet_facter_package        = 'facter.2.4.4.dmg'
+      $package_provider             = 'pkgdmg'
       $puppet_conf                  = '/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/lib/puppet'
       $puppet_ssldir                = '/etc/puppet/ssl'
