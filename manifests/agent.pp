@@ -141,7 +141,7 @@ class puppet::agent(
         ensure   => $version,
         provider => $package_provider,
       }
-    }  
+    } 
   }
 
   if $puppet_run_style == 'service' {
