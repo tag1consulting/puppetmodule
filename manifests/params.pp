@@ -33,7 +33,7 @@ class puppet::params {
   $digest_algorithm                 = 'md5'
   $puppet_run_interval              = 30
   $classfile                        = '$statedir/classes.txt'
-  #$package_provider                 = undef # falls back to system default
+  $package_provider                 = undef # falls back to system default
 
   $puppet_passenger_ssl_protocol    = 'TLSv1.2'
   $puppet_passenger_ssl_cipher      = 'AES256+EECDH:AES256+EDH'
@@ -93,6 +93,7 @@ class puppet::params {
     'Darwin': {
       $puppet_agent_service         = 'com.puppetlabs.puppet'
       $puppet_agent_package         = 'puppet-3.8.4.dmg'
+      $puppet_facter_package        = 'facter.2.4.4.dmg'
       $package_provider             = 'pkgdmg'
       $puppet_conf                  = '/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/lib/puppet'
