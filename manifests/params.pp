@@ -93,7 +93,7 @@ class puppet::params {
     'Darwin': {
       $puppet_agent_service         = 'com.puppetlabs.puppet'
       $puppet_agent_package         = 'puppet-3.8.4'
-      $package_provider             = 'appdmg'
+      $package_provider             = 'pkgdmg'
       $puppet_conf                  = '/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/lib/puppet'
       $puppet_ssldir                = '/etc/puppet/ssl'
