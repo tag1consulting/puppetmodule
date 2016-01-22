@@ -55,6 +55,8 @@ class puppet::agent(
   $puppet_agent_service   = $::puppet::params::puppet_agent_service,
   $puppet_agent_package   = $::puppet::params::puppet_agent_package,
   $version                = 'present',
+  $mac_version            = '3.8.4',
+  $mac_facter_version     = '2.4.4',
   $puppet_run_style       = 'service',
   $puppet_run_command     = '/usr/bin/puppet agent --no-daemonize --onetime --logdest syslog > /dev/null 2>&1',
   $user_id                = undef,
@@ -117,20 +119,15 @@ class puppet::agent(
   }
   case $::osfamily {
     'Darwin': {
-      #package {'hiera-1.3.4.dmg':
-      #  ensure   => present,
-      #  provider => $package_provider,
-      #  source   => 'https://downloads.puppetlabs.com/mac/hiera-1.3.4.dmg',
-      #}
-      package {'facter-2.4.4.dmg':
-        ensure   => present,
+      package {$puppet_facter_package:
+        ensure   => $mac_facter_version,
         provider => $package_provider,
-        source   => 'https://downloads.puppetlabs.com/mac/facter-2.4.4.dmg',
+        source   => "https://downloads.puppetlabs.com/mac/facter-${mac_facter_version}.dmg",
       }
       package { $puppet_agent_package:
-        ensure   => $version,
+        ensure   => $mac_version,
         provider => $package_provider,
-        source   => 'https://downloads.puppetlabs.com/mac/puppet-3.8.4.dmg',
+        source   => "https://downloads.puppetlabs.com/mac/puppet-${mac_version}.dmg'"
       }
     }
     default: {
