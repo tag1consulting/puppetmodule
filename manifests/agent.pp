@@ -8,6 +8,8 @@
 #   ['puppet_agent_service']  - The service the puppet agent runs under
 #   ['puppet_agent_package']  - The name of the package providing the puppet agent
 #   ['version']               - The version of the puppet agent to install
+#   ['mac_version']           - The package version for Mac OS X
+#   ['mac_facter_version']    - The Factor Version for Mac OS X
 #   ['puppet_run_style']      - The run style of the agent either 'service', 'cron', 'external' or 'manual'
 #   ['puppet_run_interval']   - The run interval of the puppet agent in minutes, default is 30 minutes
 #   ['puppet_run_command']    - The command that will be executed for puppet agent run
@@ -119,12 +121,12 @@ class puppet::agent(
   }
   case $::osfamily {
     'Darwin': {
-      package {$puppet_facter_package:
+      package {"${mac_facter_version}.dmg":
         ensure   => present,
         provider => $package_provider,
         source   => "https://downloads.puppetlabs.com/mac/facter-${mac_facter_version}.dmg",
       }
-      package { $puppet_agent_package:
+      package { "${mac_version}.dmg":
         ensure   => present,
         provider => $package_provider,
         source   => "https://downloads.puppetlabs.com/mac/puppet-${mac_version}.dmg'"
@@ -135,7 +137,7 @@ class puppet::agent(
         ensure   => $version,
         provider => $package_provider,
       }
-    }  
+    } 
   }
   if $puppet_run_style == 'service' {
     $startonboot = 'yes'
