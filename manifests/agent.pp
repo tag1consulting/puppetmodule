@@ -60,6 +60,7 @@ class puppet::agent(
   $puppet_agent_service   = $::puppet::params::puppet_agent_service,
   $puppet_agent_package   = $::puppet::params::puppet_agent_package,
   $version                = 'present',
+  $puppet_facter_package  = $::puppet::params::puppet_facter_package,
   $puppet_run_style       = 'service',
   $puppet_run_command     = '/usr/bin/puppet agent --no-daemonize --onetime --logdest syslog > /dev/null 2>&1',
   $user_id                = undef,
@@ -125,15 +126,15 @@ class puppet::agent(
   }
   case $::osfamily {
     'Darwin': {
-      package {"facter-${mac_facter_version}.dmg":
+      package {$puppet_facter_package:
         ensure   => present,
         provider => $package_provider,
-        source   => "https://downloads.puppetlabs.com/mac/facter-${mac_facter_version}.dmg",
+        source   => "https://downloads.puppetlabs.com/mac/${puppet_facter_package}",
       }
-      package { "puppet-${mac_version}.dmg":
+      package { $puppet_agent_package:
         ensure   => present,
         provider => $package_provider,
-        source   => "https://downloads.puppetlabs.com/mac/puppet-${mac_version}.dmg"
+        source   => "https://downloads.puppetlabs.com/mac/${puppet_agent_package}"
       }
     }
     default: {
@@ -141,7 +142,7 @@ class puppet::agent(
         ensure   => $version,
         provider => $package_provider,
       }
-    } 
+    }
   }
 
   if $puppet_run_style == 'service' {
@@ -489,9 +490,9 @@ class puppet::agent(
         }
         unless defined(Package['msgpack']) {
           package {'msgpack':
-            ensure    => 'latest',
-            provider  => 'gem',
-            require   => Package[$::puppet::params::ruby_dev, 'gcc'],
+            ensure   => 'latest',
+            provider => 'gem',
+            require  => Package[$::puppet::params::ruby_dev, 'gcc'],
           }
         }
       }
