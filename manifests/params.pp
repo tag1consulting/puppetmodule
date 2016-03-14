@@ -54,6 +54,7 @@ class puppet::params {
       $passenger_package            = 'mod_passenger'
       $rack_package                 = 'rubygem-rack'
       $ruby_dev                     = 'ruby-devel'
+      $ruby_diff_lcs                = 'rubygem-diff-lcs'
     }
     'Suse': {
       $puppet_master_package        = 'puppet-server'
@@ -65,6 +66,7 @@ class puppet::params {
       $puppet_ssldir                = '/var/lib/puppet/ssl'
       $passenger_package            = 'rubygem-passenger-apache2'
       $rack_package                 = 'rubygem-rack'
+      $ruby_diff_lcs                = 'rubygem-diff-lcs'
     }
     'Debian': {
       $puppet_master_package        = 'puppetmaster'
@@ -78,6 +80,7 @@ class puppet::params {
       $passenger_package            = 'libapache2-mod-passenger'
       $rack_package                 = 'librack-ruby'
       $ruby_dev                     = 'ruby-dev'
+      $ruby_diff_lcs                = 'ruby-diff-lcs'
     }
     'FreeBSD': {
       $puppet_agent_service         = 'puppet'
