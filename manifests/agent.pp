@@ -6,6 +6,8 @@
 #   ['puppet_server']         - The dns name of the puppet master
 #   ['puppet_server_port']    - The Port the puppet master is running on
 #   ['puppet_agent_service']  - The service the puppet agent runs under
+#   ['mac_version']           - The package version for Mac OS X
+#   ['mac_facter_version']    - The Factor Version for Mac OS X
 #   ['puppet_agent_package']  - The name of the package providing the puppet agent
 #   ['version']               - The version of the puppet agent to install
 #   ['puppet_run_style']      - The run style of the agent either 'service', 'cron', 'external' or 'manual'
@@ -58,6 +60,7 @@ class puppet::agent(
   $puppet_agent_service   = $::puppet::params::puppet_agent_service,
   $puppet_agent_package   = $::puppet::params::puppet_agent_package,
   $version                = 'present',
+  $puppet_facter_package  = $::puppet::params::puppet_facter_package,
   $puppet_run_style       = 'service',
   $puppet_run_command     = '/usr/bin/puppet agent --no-daemonize --onetime --logdest syslog > /dev/null 2>&1',
   $user_id                = undef,
@@ -121,9 +124,25 @@ class puppet::agent(
       gid    => $group_id,
     }
   }
-  package { $puppet_agent_package:
-    ensure   => $version,
-    provider => $package_provider,
+  case $::osfamily {
+    'Darwin': {
+      package {$puppet_facter_package:
+        ensure   => present,
+        provider => $package_provider,
+        source   => "https://downloads.puppetlabs.com/mac/${puppet_facter_package}",
+      }
+      package { $puppet_agent_package:
+        ensure   => present,
+        provider => $package_provider,
+        source   => "https://downloads.puppetlabs.com/mac/${puppet_agent_package}"
+      }
+    }
+    default: {
+      package { $puppet_agent_package:
+        ensure   => $version,
+        provider => $package_provider,
+      }
+    }
   }
 
   if $puppet_run_style == 'service' {
@@ -471,9 +490,9 @@ class puppet::agent(
         }
         unless defined(Package['msgpack']) {
           package {'msgpack':
-            ensure    => 'latest',
-            provider  => 'gem',
-            require   => Package[$::puppet::params::ruby_dev, 'gcc'],
+            ensure   => 'latest',
+            provider => 'gem',
+            require  => Package[$::puppet::params::ruby_dev, 'gcc'],
           }
         }
       }
