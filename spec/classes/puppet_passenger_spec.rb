@@ -17,6 +17,7 @@ describe 'puppet::passenger', :type => :class do
                 :passenger_high_performance    => true,
                 :passenger_max_requests        => '1000',
                 :passenger_stat_throttle_rate  => '30',
+                :passenger_root                => nil,
         }
         end
     context 'on Debian' do
@@ -124,6 +125,7 @@ describe 'puppet::passenger', :type => :class do
           :passenger_high_performance    => true,
           :passenger_max_requests        => '1000',
           :passenger_stat_throttle_rate  => '30',
+          :passenger_root                => nil,
         }
       end
       it {

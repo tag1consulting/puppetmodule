@@ -6,10 +6,10 @@
 #   ['puppet_server']         - The dns name of the puppet master
 #   ['puppet_server_port']    - The Port the puppet master is running on
 #   ['puppet_agent_service']  - The service the puppet agent runs under
-#   ['puppet_agent_package']  - The name of the package providing the puppet agent
-#   ['version']               - The version of the puppet agent to install
 #   ['mac_version']           - The package version for Mac OS X
 #   ['mac_facter_version']    - The Factor Version for Mac OS X
+#   ['puppet_agent_package']  - The name of the package providing the puppet agent
+#   ['version']               - The version of the puppet agent to install
 #   ['puppet_run_style']      - The run style of the agent either 'service', 'cron', 'external' or 'manual'
 #   ['puppet_run_interval']   - The run interval of the puppet agent in minutes, default is 30 minutes
 #   ['puppet_run_command']    - The command that will be executed for puppet agent run
@@ -39,6 +39,9 @@
 #   ['serialization_package'] - defaults to undef, if provided, we install this package, otherwise we fall back to the gem from 'serialization_format'
 #   ['http_proxy_host']       - The hostname of an HTTP proxy to use for agent -> master connections
 #   ['http_proxy_port']       - The port to use when puppet uses an HTTP proxy
+#   ['localconfig']           - Where puppet agent caches the local configuration. An extension indicating the cache format is added automatically.
+#   ['rundir']                - Where Puppet PID files are kept.
+#   ['puppet_ssldir']         - Puppet sll directory
 #
 # Actions:
 # - Install and configures the puppet agent
@@ -57,8 +60,7 @@ class puppet::agent(
   $puppet_agent_service   = $::puppet::params::puppet_agent_service,
   $puppet_agent_package   = $::puppet::params::puppet_agent_package,
   $version                = 'present',
-  $mac_version            = '3.8.6',
-  $mac_facter_version     = '2.4.6',
+  $puppet_facter_package  = $::puppet::params::puppet_facter_package,
   $puppet_run_style       = 'service',
   $puppet_run_command     = '/usr/bin/puppet agent --no-daemonize --onetime --logdest syslog > /dev/null 2>&1',
   $user_id                = undef,
@@ -70,6 +72,7 @@ class puppet::agent(
   $syslogfacility         = undef,
   $priority               = undef,
   $logdir                 = undef,
+  $rundir                 = $::puppet::params::rundir,
 
   #[agent]
   $srv_domain             = undef,
@@ -103,6 +106,8 @@ class puppet::agent(
   $cron_minute            = undef,
   $serialization_format   = undef,
   $serialization_package  = undef,
+  $localconfig            = undef,
+  $puppet_ssldir          = $::puppet::params::puppet_ssldir,
 ) inherits puppet::params {
 
   if ! defined(User[$::puppet::params::puppet_user]) {
@@ -121,15 +126,15 @@ class puppet::agent(
   }
   case $::osfamily {
     'Darwin': {
-      package {"facter-${mac_facter_version}.dmg":
+      package {$puppet_facter_package:
         ensure   => present,
         provider => $package_provider,
-        source   => "https://downloads.puppetlabs.com/mac/facter-${mac_facter_version}.dmg",
+        source   => "https://downloads.puppetlabs.com/mac/${puppet_facter_package}",
       }
-      package { "puppet-${mac_version}.dmg":
+      package { $puppet_agent_package:
         ensure   => present,
         provider => $package_provider,
-        source   => "https://downloads.puppetlabs.com/mac/puppet-${mac_version}.dmg"
+        source   => "https://downloads.puppetlabs.com/mac/${puppet_agent_package}"
       }
     }
     default: {
@@ -139,6 +144,7 @@ class puppet::agent(
       }
     }
   }
+
   if $puppet_run_style == 'service' {
     $startonboot = 'yes'
   }
@@ -271,6 +277,30 @@ class puppet::agent(
   }else {
     $orderign_ensure = 'absent'
   }
+  if $localconfig != undef {
+    ini_setting {'puppetagentlocalconfig':
+      ensure  => present,
+      setting => 'localconfig',
+      value   => $localconfig,
+    }
+  }
+  if $puppet_ssldir != undef {
+    ini_setting {'puppetagentsldir':
+      ensure  => present,
+      section => 'main',
+      setting => 'ssldir',
+      value   => $puppet_ssldir,
+    }
+  }
+  
+  # rundir has no default and must be provided.
+  ini_setting {'puppetagentrundir':
+    ensure  => present,
+    section => 'main',
+    setting => 'rundir',
+    value   => $rundir,
+  }
+
   ini_setting {'puppetagentordering':
     ensure  => $orderign_ensure,
     setting => 'ordering',
@@ -460,9 +490,9 @@ class puppet::agent(
         }
         unless defined(Package['msgpack']) {
           package {'msgpack':
-            ensure    => 'latest',
-            provider  => 'gem',
-            require   => Package[$::puppet::params::ruby_dev, 'gcc'],
+            ensure   => 'latest',
+            provider => 'gem',
+            require  => Package[$::puppet::params::ruby_dev, 'gcc'],
           }
         }
       }
