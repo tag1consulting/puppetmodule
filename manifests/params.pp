@@ -96,7 +96,7 @@ class puppet::params {
       $package_provider             = 'pkgdmg'
       $puppet_conf                  = '/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/lib/puppet'
-      $puppet_ssldir                = '/var/lib/puppet/ssl'
+      $puppet_ssldir                = '/etc/puppet/ssl'
     }
     default: {
       err('The Puppet module does not support your os')
