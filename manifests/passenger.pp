@@ -50,6 +50,7 @@ class puppet::passenger(
   $passenger_max_requests = 0,
   $passenger_stat_throttle_rate = 10,
   $passenger_root,
+  $passenger_disable_mod_status = true,
 ){
 
   class { 'apache':
@@ -61,7 +62,9 @@ class puppet::passenger(
     trace_enable        => 'Off',
   }
 
-  apache::mod { 'status': package_ensure => 'absent' }
+  if $passenger_disable_mod_status {
+    apache::mod { 'status': package_ensure => 'absent' }
+  }
 
   include puppet::params
   class { 'apache::mod::passenger':

@@ -101,6 +101,7 @@ class puppet::master (
   $passenger_max_requests        = 10000,
   $passenger_stat_throttle_rate  = 30,
   $passenger_root                = undef,
+  $passenger_disable_mod_status  = true,
   $serialization_format          = undef,
   $serialization_package         = undef,
 ) inherits puppet::params {
@@ -159,6 +160,10 @@ class puppet::master (
     passenger_max_requests        => $passenger_max_requests,
     passenger_stat_throttle_rate  => $passenger_stat_throttle_rate,
     passenger_root                => $passenger_root,
+<<<<<<< HEAD
+=======
+    passenger_disable_mod_status  => $passenger_disable_mod_status,
+>>>>>>> ac41fc3fa574aff597dfb850595fefad4778ad56
   } ->
   Anchor['puppet::master::end']
 
