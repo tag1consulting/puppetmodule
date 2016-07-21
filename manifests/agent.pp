@@ -42,6 +42,8 @@
 #   ['localconfig']           - Where puppet agent caches the local configuration. An extension indicating the cache format is added automatically.
 #   ['rundir']                - Where Puppet PID files are kept.
 #   ['puppet_ssldir']         - Puppet sll directory
+#   ['ca_server']             - The server to use for certificate authority requests
+#   ['ca_port']               - The port to use for the certificate authority
 #
 # Actions:
 # - Install and configures the puppet agent
@@ -108,6 +110,8 @@ class puppet::agent(
   $serialization_package  = undef,
   $localconfig            = undef,
   $puppet_ssldir          = $::puppet::params::puppet_ssldir,
+  $ca_server              = undef,
+  $ca_port                = undef,
 ) inherits puppet::params {
 
   if ! defined(User[$::puppet::params::puppet_user]) {
@@ -378,6 +382,14 @@ class puppet::agent(
   ini_setting {'puppetagentdigestalgorithm':
     setting => 'digest_algorithm',
     value   => $digest_algorithm,
+  }
+  ini_setting {'puppetagentca_server':
+    setting => 'ca_server',
+    value   => $ca_server,
+  }
+  ini_setting {'puppetagentca_port':
+    setting => 'ca_port',
+    value   => $ca_port,
   }
   if ($templatedir != undef) and ($templatedir != 'undef')
   {
