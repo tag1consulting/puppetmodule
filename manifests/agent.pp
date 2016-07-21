@@ -296,7 +296,7 @@ class puppet::agent(
       value   => $puppet_ssldir,
     }
   }
-  
+
   # rundir has no default and must be provided.
   ini_setting {'puppetagentrundir':
     ensure  => present,
