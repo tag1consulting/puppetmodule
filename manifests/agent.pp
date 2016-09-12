@@ -407,14 +407,25 @@ class puppet::agent(
       section => 'main',
     }
   }
-  ini_setting {'puppetagentconfigtimeout':
-    setting => 'configtimeout',
-    value   => $configtimeout,
-  }
-  if $stringify_facts != undef {
+  if versioncmp($::puppetversion, "4.0.0") < 0 {
+    ini_setting {'puppetagentconfigtimeout':
+      setting => 'configtimeout',
+      value   => $configtimeout,
+    }
+    if $stringify_facts != undef {
+      ini_setting {'puppetagentstringifyfacts':
+        setting => 'stringify_facts',
+        value   => $stringify_facts,
+      }
+    }
+  } else {
+    ini_setting {'puppetagentconfigtimeout':
+      setting => 'configtimeout',
+      ensure  => absent,
+    }
     ini_setting {'puppetagentstringifyfacts':
       setting => 'stringify_facts',
-      value   => $stringify_facts,
+      ensure  => absent,
     }
   }
   if $verbose != undef {
