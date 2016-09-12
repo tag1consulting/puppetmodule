@@ -17,8 +17,8 @@
 #   ['group_id']              - The groupid of the puppet group
 #   ['splay']                 - If splay should be enable defaults to false
 #   ['splaylimit']            - The maximum time to delay before runs.
-#   ['classfile']             - The file in which puppet agent stores a list of the classes 
-#                               associated with the retrieved configuration. 
+#   ['classfile']             - The file in which puppet agent stores a list of the classes
+#                               associated with the retrieved configuration.
 #   ['logdir']                - The directory in which to store log files
 #   ['environment']           - The environment of the puppet agent
 #   ['report']                - Whether to return reports
@@ -64,7 +64,7 @@ class puppet::agent(
   $version                = 'present',
   $puppet_facter_package  = $::puppet::params::puppet_facter_package,
   $puppet_run_style       = 'service',
-  $puppet_run_command     = '/usr/bin/puppet agent --no-daemonize --onetime --logdest syslog > /dev/null 2>&1',
+  $puppet_run_command     = $::puppet::params::puppet_run_command,
   $user_id                = undef,
   $group_id               = undef,
   $package_provider       = $::puppet::params::package_provider,
@@ -86,7 +86,7 @@ class puppet::agent(
   $puppet_run_interval    = $::puppet::params::puppet_run_interval,
   $splay                  = false,
 
-  # $splaylimit defaults to $runinterval per Puppetlabs docs:  
+  # $splaylimit defaults to $runinterval per Puppetlabs docs:
   # http://docs.puppetlabs.com/references/latest/configuration.html#splaylimit
   $splaylimit             = $::puppet::params::puppet_run_interval,
   $classfile              = $::puppet::params::classfile,

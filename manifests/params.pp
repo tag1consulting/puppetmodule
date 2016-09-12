@@ -40,6 +40,14 @@ class puppet::params {
   # Only used when environments == directory
   $environmentpath                  = "${confdir}/environments"
 
+   if versioncmp($::puppetversion, "4.0.0") >= 0 {
+    $puppet_conf        = '/etc/puppetlabs/puppet/puppet.conf'
+    $puppet_run_command = '/opt/puppetlabs/bin/puppet agent --no-daemonize --onetime --logdest syslog > /dev/null 2>&1',
+  } else {
+    $puppet_conf        = '/etc/puppet/puppet.conf'
+    $puppet_run_command = '/usr/bin/puppet agent --no-daemonize --onetime --logdest syslog > /dev/null 2>&1',
+  }
+
   case $::osfamily {
     'RedHat': {
       $puppet_master_package        = 'puppet-server'
@@ -48,7 +56,6 @@ class puppet::params {
       $puppet_agent_package         = 'puppet'
       $package_provider                 = undef # falls back to system default
       $puppet_defaults              = '/etc/sysconfig/puppet'
-      $puppet_conf                  = '/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/lib/puppet'
       $puppet_ssldir                = '/var/lib/puppet/ssl'
       $passenger_package            = 'mod_passenger'
@@ -61,7 +68,6 @@ class puppet::params {
       $puppet_agent_service         = 'puppet'
       $puppet_agent_package         = 'puppet'
       $package_provider                 = undef # falls back to system default
-      $puppet_conf                  = '/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/lib/puppet'
       $puppet_ssldir                = '/var/lib/puppet/ssl'
       $passenger_package            = 'rubygem-passenger-apache2'
@@ -74,7 +80,6 @@ class puppet::params {
       $puppet_agent_package         = 'puppet'
       $package_provider                 = undef # falls back to system default
       $puppet_defaults              = '/etc/default/puppet'
-      $puppet_conf                  = '/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/lib/puppet'
       $puppet_ssldir                = '/var/lib/puppet/ssl'
       $passenger_package            = 'libapache2-mod-passenger'
@@ -94,7 +99,6 @@ class puppet::params {
       $puppet_agent_package         = 'puppet-3.8.5.dmg'
       $puppet_facter_package        = 'facter.2.4.5.dmg'
       $package_provider             = 'pkgdmg'
-      $puppet_conf                  = '/etc/puppet/puppet.conf'
       $puppet_vardir                = '/var/lib/puppet'
       $puppet_ssldir                = '/etc/puppet/ssl'
     }
