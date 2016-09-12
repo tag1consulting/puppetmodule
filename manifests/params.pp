@@ -42,10 +42,10 @@ class puppet::params {
 
    if versioncmp($::puppetversion, "4.0.0") >= 0 {
     $puppet_conf        = '/etc/puppetlabs/puppet/puppet.conf'
-    $puppet_run_command = '/opt/puppetlabs/bin/puppet agent --no-daemonize --onetime --logdest syslog > /dev/null 2>&1',
+    $puppet_run_command = '/opt/puppetlabs/bin/puppet agent --no-daemonize --onetime --logdest syslog > /dev/null 2>&1'
   } else {
     $puppet_conf        = '/etc/puppet/puppet.conf'
-    $puppet_run_command = '/usr/bin/puppet agent --no-daemonize --onetime --logdest syslog > /dev/null 2>&1',
+    $puppet_run_command = '/usr/bin/puppet agent --no-daemonize --onetime --logdest syslog > /dev/null 2>&1'
   }
 
   case $::osfamily {
