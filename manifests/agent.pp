@@ -309,7 +309,7 @@ class puppet::agent(
       value   => $puppet_ssldir,
     }
   }
-  
+
   if $show_diff != undef {
     ini_setting {'puppetagentshow_diff':
       ensure  => present,
@@ -447,12 +447,12 @@ class puppet::agent(
     }
   } else {
     ini_setting {'puppetagentconfigtimeout':
-      setting => 'configtimeout',
       ensure  => absent,
+      setting => 'configtimeout',
     }
     ini_setting {'puppetagentstringifyfacts':
-      setting => 'stringify_facts',
       ensure  => absent,
+      setting => 'stringify_facts',
     }
   }
   if $verbose != undef {

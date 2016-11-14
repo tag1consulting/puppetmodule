@@ -40,7 +40,7 @@ class puppet::params {
   # Only used when environments == directory
   $environmentpath                  = "${confdir}/environments"
 
-   if versioncmp($::puppetversion, "4.0.0") >= 0 {
+  if versioncmp($::puppetversion, "4.0.0") >= 0 {
     $puppet_conf        = '/etc/puppetlabs/puppet/puppet.conf'
     $puppet_run_command = '/opt/puppetlabs/bin/puppet agent --no-daemonize --onetime --logdest syslog > /dev/null 2>&1'
     $puppet_vardir      = '/opt/puppetlabs/server/data/puppetserver'

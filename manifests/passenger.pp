@@ -32,11 +32,9 @@
 #   }
 #
 class puppet::passenger(
-  $generate_ssl_certs = true,
   $puppet_passenger_port,
   $puppet_passenger_ssl_protocol,
   $puppet_passenger_ssl_cipher,
-  $puppet_passenger_tempdir = false,
   $puppet_docroot,
   $apache_serveradmin,
   $puppet_conf,
@@ -44,12 +42,14 @@ class puppet::passenger(
   $certname,
   $conf_dir,
   $dns_alt_names,
+  $passenger_root,
+  $generate_ssl_certs = true,
+  $puppet_passenger_tempdir = false,
   $config_addon = '',
   $passenger_max_pool_size = 6,
   $passenger_high_performance = 'off',
   $passenger_max_requests = 0,
   $passenger_stat_throttle_rate = 10,
-  $passenger_root,
   $passenger_disable_mod_status = true,
 ){
 
