@@ -151,10 +151,13 @@ class puppet::agent(
 
   if $puppet_run_style == 'service' {
     $startonboot = 'yes'
+    $daemonize   = true
   }
   else {
     $startonboot = 'no'
+    $daemonize = false
   }
+  
 
   if ($::osfamily == 'Debian' and $puppet_run_style != 'manual') or ($::osfamily == 'Redhat') {
     file { $puppet::params::puppet_defaults:
@@ -163,6 +166,14 @@ class puppet::agent(
       group   => 'root',
       require => Package[$puppet_agent_package],
       content => template("puppet/${puppet::params::puppet_defaults}.erb"),
+    }
+  }
+  elsif $::osfamily == 'Darwin' {
+    file {'/Library/LaunchDaemons/com.puppetlabs.puppet.plist':
+      mode    => '0644',
+      owner   => 'root',
+      group   => 'wheel',
+      content => template('puppet/launchd/com.puppetlabs.puppet.plist.erb'),
     }
   }
 
