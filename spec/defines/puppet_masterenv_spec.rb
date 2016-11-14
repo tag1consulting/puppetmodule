@@ -15,7 +15,9 @@ describe 'puppet::masterenv', :type => :define do
       {
         :manifest        => '/etc/puppet/environments/dev.pp',
         :modulepath      => '/etc/puppet/environments/modules/',
-        :puppet_conf     => '/etc/puppet/puppet.conf'
+        :puppet_conf     => '/etc/puppet/puppet.conf',
+        :environments    => 'config',
+        :environmentpath => ''
       }
     end
     it {

@@ -63,6 +63,7 @@ class puppet::params {
       $passenger_package            = 'mod_passenger'
       $rack_package                 = 'rubygem-rack'
       $ruby_dev                     = 'ruby-devel'
+      $puppet_facter_package        = nil
     }
     'Suse': {
       $puppet_master_package        = 'puppet-server'
@@ -72,6 +73,7 @@ class puppet::params {
       $package_provider                 = undef # falls back to system default
       $passenger_package            = 'rubygem-passenger-apache2'
       $rack_package                 = 'rubygem-rack'
+      $puppet_facter_package        = nil
     }
     'Debian': {
       $puppet_master_package        = 'puppetmaster'
@@ -83,12 +85,14 @@ class puppet::params {
       $passenger_package            = 'libapache2-mod-passenger'
       $rack_package                 = 'librack-ruby'
       $ruby_dev                     = 'ruby-dev'
+      $puppet_facter_package        = nil
     }
     'FreeBSD': {
       $puppet_agent_service         = 'puppet'
       $puppet_agent_package         = 'sysutils/puppet'
       $package_provider                 = undef # falls back to system default
       $puppet_conf                  = '/usr/local/etc/puppet/puppet.conf'
+      $puppet_facter_package        = nil
     }
     'Darwin': {
       $puppet_agent_service         = 'com.puppetlabs.puppet'

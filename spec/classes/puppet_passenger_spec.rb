@@ -28,6 +28,7 @@ describe 'puppet::passenger', :type => :class do
                 :operatingsystemrelease => '5',
                 :concat_basedir         => '/dne',
                 :lsbdistcodename        => 'lenny',
+                :puppetversion   => '3.8.0'
             }
         end
          it {
@@ -92,6 +93,7 @@ describe 'puppet::passenger', :type => :class do
           :operatingsystem        => 'Redhat',
           :operatingsystemrelease => '5',
           :concat_basedir         => '/dne',
+          :puppetversion   => '3.8.0'
         }
       end
       it {
@@ -106,6 +108,7 @@ describe 'puppet::passenger', :type => :class do
           :operatingsystem        => 'Redhat',
           :operatingsystemrelease => '5',
           :concat_basedir         => '/dne',
+          :puppetversion   => '3.8.0'
         }
       end
       let (:params) do

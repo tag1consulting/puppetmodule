@@ -6,7 +6,8 @@ describe 'puppet::agent', :type => :class do
       {
         :osfamily        => 'Debian',
         :operatingsystem => 'Debian',
-        :kernel          => 'Linux'
+        :kernel          => 'Linux',
+        :puppetversion   => '3.8.0'
       }
     end
 
@@ -167,7 +168,8 @@ describe 'puppet::agent', :type => :class do
       {
         :osfamily        => 'RedHat',
         :operatingsystem => 'RedHat',
-        :kernel          => 'Linux'
+        :kernel          => 'Linux',
+        :puppetversion   => '3.8.0'
       }
     end
     describe 'when installed' do
@@ -327,7 +329,8 @@ describe 'puppet::agent', :type => :class do
       {
         :osfamily        => 'RedHat',
         :operatingsystem => 'RedHat',
-        :kernel          => 'Linux'
+        :kernel          => 'Linux',
+        :puppetversion   => '3.8.0'
       }
     end
     context 'with ordering set' do
@@ -389,7 +392,8 @@ describe 'puppet::agent', :type => :class do
       {
         :osfamily        => 'RedHat',
         :operatingsystem => 'RedHat',
-        :kernel          => 'Linux'
+        :kernel          => 'Linux',
+        :puppetversion   => '3.8.0'
       }
     end
     context 'with trusted set' do
@@ -451,7 +455,8 @@ describe 'puppet::agent', :type => :class do
       {
         :osfamily        => 'RedHat',
         :operatingsystem => 'RedHat',
-        :kernel          => 'Linux'
+        :kernel          => 'Linux',
+        :puppetversion   => '3.8.0'
       }
     end
     context 'with templatedir set' do
@@ -513,7 +518,8 @@ describe 'puppet::agent', :type => :class do
       {
         :osfamily        => 'RedHat',
         :operatingsystem => 'RedHat',
-        :kernel          => 'Linux'
+        :kernel          => 'Linux',
+        :puppetversion   => '3.8.0'
       }
     end
     context 'with configtimeout set' do
@@ -556,7 +562,8 @@ describe 'puppet::agent', :type => :class do
       {
         :osfamily        => 'RedHat',
         :operatingsystem => 'RedHat',
-        :kernel          => 'Linux'
+        :kernel          => 'Linux',
+        :puppetversion   => '3.8.0'
       }
     end
     context 'with stringify_facts set' do
@@ -582,7 +589,8 @@ describe 'puppet::agent', :type => :class do
       {
         :osfamily        => 'RedHat',
         :operatingsystem => 'RedHat',
-        :kernel          => 'Linux'
+        :kernel          => 'Linux',
+        :puppetversion   => '3.8.0'
       }
     end
     context 'with http_proxy_host set' do
@@ -608,7 +616,8 @@ describe 'puppet::agent', :type => :class do
       {
         :osfamily        => 'RedHat',
         :operatingsystem => 'RedHat',
-        :kernel          => 'Linux'
+        :kernel          => 'Linux',
+        :puppetversion   => '3.8.0'
       }
     end
     context 'with http_proxy_port set' do

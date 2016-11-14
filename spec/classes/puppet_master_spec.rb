@@ -10,7 +10,8 @@ describe 'puppet::master', :type => :class do
                 :operatingsystemrelease => '5',
                 :concat_basedir => '/nde',
                 :lsbdistcodename => 'lenny',
-                :processorcount => '2'
+                :processorcount => '2',
+                :puppetversion   => '3.8.0'
             }
         end
         let (:params) do
@@ -27,8 +28,7 @@ describe 'puppet::master', :type => :class do
                 :storeconfigs           => 'true',
                 :storeconfigs_dbserver  => 'test.example.com',
                 :dns_alt_names          => ['puppet'],
-                :strict_variables       => 'true'
-
+                :strict_variables       => 'true',
             }
         end
         it {
@@ -180,7 +180,8 @@ describe 'puppet::master', :type => :class do
                 :operatingsystem => 'RedHat',
                 :operatingsystemrelease => '6',
                 :concat_basedir => '/nde',
-                :processorcount => '2'
+                :processorcount => '2',
+                :puppetversion   => '3.8.0'
             }
         end
         let (:params) do
@@ -347,7 +348,8 @@ describe 'puppet::master', :type => :class do
                 :operatingsystem => 'RedHat',
                 :operatingsystemrelease => '6',
                 :concat_basedir => '/nde',
-                :processorcount => '2'
+                :processorcount => '2',
+                :puppetversion   => '3.8.0'
             }
         end
         let (:params) do {
@@ -380,7 +382,8 @@ describe 'puppet::master', :type => :class do
                 :operatingsystem => 'RedHat',
                 :operatingsystemrelease => '6',
                 :concat_basedir => '/nde',
-                :processorcount => '2'
+                :processorcount => '2',
+                :puppetversion   => '3.8.0'
             }
         end
         let (:params) do {

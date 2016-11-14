@@ -7,6 +7,7 @@ describe 'puppet::storeconfigs', :type => :class do
             {
                 :osfamily        => 'Debian',
                 :operatingsystem => 'Debian',
+                :puppetversion   => '3.8.0'
             }
         end
         let (:params) do
@@ -34,6 +35,7 @@ describe 'puppet::storeconfigs', :type => :class do
             {
                 :osfamily        => 'Debian',
                 :operatingsystem => 'Debian',
+                :puppetversion   => '3.8.0'
             }
         end
         let (:params) do
