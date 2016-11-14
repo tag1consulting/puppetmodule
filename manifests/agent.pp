@@ -29,6 +29,7 @@
 #   ['trusted_node_data']     - Enable the trusted facts hash
 #   ['listen']                - If puppet agent should listen for connections
 #   ['reportserver']          - The server to send transaction reports to.
+#   ['show_diff']             - Should the reports contain diff output
 #   ['digest_algorithm']      - The algorithm to use for file digests.
 #   ['templatedir']           - Template dir, if unset it will remove the setting.
 #   ['configtimeout']         - How long the client should wait for the configuration to be retrieved before considering it a failure
@@ -95,6 +96,7 @@ class puppet::agent(
   $pluginsync             = true,
   $listen                 = false,
   $reportserver           = '$server',
+  $show_diff              = undef,
   $digest_algorithm       = $::puppet::params::digest_algorithm,
   $configtimeout          = '2m',
   $stringify_facts        = undef,
@@ -157,7 +159,7 @@ class puppet::agent(
     $startonboot = 'no'
     $daemonize = false
   }
-  
+
 
   if ($::osfamily == 'Debian' and $puppet_run_style != 'manual') or ($::osfamily == 'Redhat') {
     file { $puppet::params::puppet_defaults:
@@ -305,6 +307,20 @@ class puppet::agent(
       section => 'main',
       setting => 'ssldir',
       value   => $puppet_ssldir,
+    }
+  }
+  
+  if $show_diff != undef {
+    ini_setting {'puppetagentshow_diff':
+      ensure  => present,
+      section => 'main',
+      setting => 'show_diff',
+      value   => $show_diff,
+    }
+    unless defined(Package[$::puppet::params::ruby_diff_lcs]) {
+      package {$::puppet::params::ruby_diff_lcs:
+        ensure  => 'latest',
+      }
     }
   }
 
