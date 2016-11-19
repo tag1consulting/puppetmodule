@@ -42,7 +42,7 @@ class puppet::passenger(
   $certname,
   $conf_dir,
   $dns_alt_names,
-  $passenger_root,
+  $passenger_root = undef,
   $generate_ssl_certs = true,
   $puppet_passenger_tempdir = false,
   $config_addon = '',
